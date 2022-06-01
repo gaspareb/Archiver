@@ -55,18 +55,20 @@ express()
     }
   )
   .get('/archiver', (req, res) => {
-        console.log('A new request received at ' + Date.now() + ' ' + process.env.S3_BUCKET); 
+        const date = new Date();    
+        console.log('A new request received at ' + date + ' ' + process.env.S3_BUCKET); 
         //get data
         const data = '{gaspare:bastone}';
+        
         //process data
-
+        //Dump data to S3AWS 
         aws.config.update({
           accessKeyId: process.env.S3_ACCESS_KEY_ID,
           secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
           region: process.env.S3_REGION
         });
         const s3 = new aws.S3();
-        const fileName = Date.now();
+        const fileName = new Date();
         const fileType = contentType;
         const s3Params = {
           Bucket: process.env.S3_BUCKET,
