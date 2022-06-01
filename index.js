@@ -13,9 +13,9 @@ express()
   .get('/', (req, res) => res.render('pages/index'))
   .get('/listBuckets', (req, res) => {
     aws.config.update({
-      accessKeyId: 'AKIATFEHGOMPCQI6TFEL',
-      secretAccessKey: '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',
-      "region": 'us-east-1' 
+      accessKeyId: process.env.S3_ACCESS_KEY_ID,
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+      region: process.env.S3_REGION
     });
     const s3 = new aws.S3();
     s3.listBuckets(function (err, data) { 
@@ -32,9 +32,9 @@ express()
   .get('/getBucketList', (req, res) => {
     let msg = 'A new getBucketList request received at ' + Date.now(); 
     aws.config.update({
-      accessKeyId: 'AKIATFEHGOMPCQI6TFEL',
-      secretAccessKey: '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',
-      "region": 'us-east-1' 
+      accessKeyId: process.env.S3_ACCESS_KEY_ID,
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+      region: process.env.S3_REGION
     });
     const s3 = new aws.S3();
     const fileName = Date.now(); 
@@ -61,9 +61,9 @@ express()
         //process data
 
         aws.config.update({
-          accessKeyId: 'AKIATFEHGOMPCQI6TFEL',
-          secretAccessKey: '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',
-          "region": 'us-east-1' 
+          accessKeyId: process.env.S3_ACCESS_KEY_ID,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+          region: process.env.S3_REGION
         });
         const s3 = new aws.S3();
         const fileName = Date.now();
@@ -82,20 +82,6 @@ express()
             res.end(); 
           } // successful response
         });
-
-        // s3.getSignedUrl('putObject', s3Params, (err, mydata) => {
-        //   if(err){
-        //     console.log('s3.getSignedUrl putObject error: ' + err);
-        //     return res.end();
-        //   }
-        //   const returnData = {
-        //     signedRequest: mydata,
-        //     url: `https://${process.env.S3_BUCKET}.s3.amazonaws.com/${fileName}`
-        //   };
-        //   console.log('returnData: ' + JSON.stringify(returnData));
-        //   res.write(JSON.stringify(returnData));
-        //   res.end();        
-        // });
       }
     )
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
