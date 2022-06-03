@@ -105,7 +105,7 @@ express()
     });
     }
   )
-  .get('/archiver', async (req, res) => {
+  .get('/archiverOnly', async (req, res) => {
         const date = new Date();    
         console.log('A new request received at ' + date + ' ' + process.env.S3_BUCKET); 
         //get data
@@ -135,6 +135,71 @@ express()
             res.end(); 
           } // successful response
         });
+      }
+    )
+    .get('/archiverAccount', async (req, res) => {
+        const pool = new Pool({
+          user: 'euualwhhhuwexs',
+          host: 'ec2-34-230-153-41.compute-1.amazonaws.com',
+          database: 'd2ge3qgch9nreg',
+          password: '809ea4681dc421d11105a939afc1524a7770ad760fbc8593fddcd3f3becfdbee',
+          port: 5432,
+          ssl: { rejectUnauthorized: false }  
+        })
+        var theaccount = "";
+        var accountNo = "";
+        var Industry = "";
+        var o = {} // empty Object
+        const results = pool.query('SELECT * from salesforce.account ORDER BY NAME ASC', (err, resp) => {            
+          pool.end();
+          if(err){
+            console.log('err ' + Date.now() + ' ' + err);
+          }else{    
+            // console.log('JSON.stringify(data) ' + JSON.stringify(resp));      
+            var key = 'Accounts';
+            o[key] = []; // empty Array, which you can push() values into
+            for(let i = 0; i < resp.rows.length; i++){       
+              theaccount = resp.rows[i].name;
+              accountNo = resp.rows[i].accountnumber;
+              Industry = resp.rows[i].industry;
+              var data1 = {
+                theaccount: theaccount, 
+                accountNo: accountNo,
+                Industry: Industry
+              };
+              o[key].push(data1); 
+            }      
+          }
+        //Dump data to S3AWS 
+        aws.config.update({
+          accessKeyId: process.env.S3_ACCESS_KEY_ID,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+          region: process.env.S3_REGION
+        });
+        const s3 = new aws.S3();
+        const fileName = new Date();
+        const fileType = contentType;
+        var thedata = JSON.stringify(o);
+        const s3Params = {
+          Bucket: process.env.S3_BUCKET,
+          Key: '' + fileName + '.json',
+          Expires: 60,
+          ContentType: fileType,
+          Body: thedata,
+          ContentType: "application/json"
+        };
+         
+        s3.putObject(s3Params, function(err, data) {
+          if (err){
+            console.log(err, err.stack); // an error occurred
+          }else{
+            res.write(JSON.stringify(data));
+            res.end(); 
+          } // successful response
+        }).promise();
+          // res.write(JSON.stringify(o) + "\n");
+          // res.end(); 
+        })  
       }
     )
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
