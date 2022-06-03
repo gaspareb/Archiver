@@ -6,7 +6,12 @@ const PORT = process.env.PORT || 5000
 const contentType=process.env.S3_CONTENT_TYPE
 const aws = require('aws-sdk');
 const { Pool, Client } = require('pg');
-
+const user = process.env.PG_USER;
+const host = process.env.PG_HOST;
+const database = process.env.PG_DATABASE;
+const password = process.env.PG_PASSWORD;
+const port = process.env.PG_PORT;
+const query = process.env.PG_QUERY;
 const credentials = {
   user: process.env.PG_USER,
   host: process.env.PG_HOST,
@@ -15,30 +20,26 @@ const credentials = {
   port: process.env.PG_PORT,
 };
 
-
-function getAccounts(){
- 
-}
-
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/getAccounts', (req, res) => {
+    
     const pool = new Pool({
-      user: 'euualwhhhuwexs',
-      host: 'ec2-34-230-153-41.compute-1.amazonaws.com',
-      database: 'd2ge3qgch9nreg',
-      password: '809ea4681dc421d11105a939afc1524a7770ad760fbc8593fddcd3f3becfdbee',
-      port: 5432,
+      user: user,
+      host: host,
+      database: database,
+      password: password,
+      port: port,
       ssl: { rejectUnauthorized: false }  
     })
     var theaccount = "";
     var accountNo = "";
     var Industry = "";
     var o = {} // empty Object
-    const results = pool.query('SELECT * from salesforce.account ORDER BY NAME ASC', (err, resp) => {            
+    const results = pool.query(query, (err, resp) => {            
       pool.end();
       if(err){
         console.log('err ' + Date.now() + ' ' + err);
@@ -110,7 +111,6 @@ express()
         console.log('A new request received at ' + date + ' ' + process.env.S3_BUCKET); 
         //get data
         const data = '{gaspare:bastone}';
-        
         //process data
         //Dump data to S3AWS 
         aws.config.update({
@@ -139,18 +139,18 @@ express()
     )
     .get('/archiverAccount', async (req, res) => {
         const pool = new Pool({
-          user: 'euualwhhhuwexs',
-          host: 'ec2-34-230-153-41.compute-1.amazonaws.com',
-          database: 'd2ge3qgch9nreg',
-          password: '809ea4681dc421d11105a939afc1524a7770ad760fbc8593fddcd3f3becfdbee',
-          port: 5432,
+          user: user,
+          host: host,
+          database: database,
+          password: password,
+          port: port,
           ssl: { rejectUnauthorized: false }  
         })
         var theaccount = "";
         var accountNo = "";
         var Industry = "";
         var o = {} // empty Object
-        const results = pool.query('SELECT * from salesforce.account ORDER BY NAME ASC', (err, resp) => {            
+        const results = pool.query(query, (err, resp) => {            
           pool.end();
           if(err){
             console.log('err ' + Date.now() + ' ' + err);
@@ -197,8 +197,6 @@ express()
             res.end(); 
           } // successful response
         }).promise();
-          // res.write(JSON.stringify(o) + "\n");
-          // res.end(); 
         })  
       }
     )
