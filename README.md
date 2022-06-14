@@ -1,3 +1,5 @@
+# gbastone@salesforce.com
+
 # Archiver
 
 This is a bare bones POC Node.js app using [Express 4](http://expressjs.com/) that does a few things.
@@ -7,8 +9,9 @@ This is a bare bones POC Node.js app using [Express 4](http://expressjs.com/) th
 3. Currently written as all "get" requests, needs to get restricted in the future
 4. Uses a .env file with the below settings
 5. Relies on the AWS SDK and needs global settings set.
+6. Code needs a good refactoring
 
-# What you need from Salesforce   
+# What you need from Salesforce 
 
 1. consumerKey
 2. consumerSecret
@@ -37,30 +40,28 @@ This applications base is [Getting Started on Heroku with Node.js](https://devce
 
 ## Running Locally
 
-Make sure you have:
-[Node.js](http://nodejs.org/)
-[Heroku CLI](https://cli.heroku.com/) installed.
-[AWS-SDK] (https://github.com/aws/aws-sdk-js)
-[DOTENV] (https://github.com/motdotla/dotenv#readme)
+## Make sure you have:
+1. [Node.js](http://nodejs.org/)
+2. [Heroku CLI](https://cli.heroku.com/) installed
+3. [AWS-SDK] (https://github.com/aws/aws-sdk-js)
+4. [DOTENV] (https://github.com/motdotla/dotenv#readme)
 
-Commands to start:
-$ git clone https://github.com/heroku/Archiver.git # or clone your own fork
-$ cd Archiver
-$ npm install
-$ npm start
 
+## Commands to start:
+1. $ git clone https://github.com/heroku/Archiver.git # or clone your own fork
+2. $ cd Archiver
+3. $ npm install
+4. $ npm start
 
 Your app should now be running on the port that you have it set to, my default was 3000 [localhost:3000](http://localhost:3000/).
 
 ## Deploying to Heroku
 
-```
-$ heroku create
-$ git push heroku main
-$ heroku open
-```
-or
+1. $ heroku create
+2. $ git push heroku main
+3. $ heroku open
 
+## Or go directly and get info
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ## Documentation

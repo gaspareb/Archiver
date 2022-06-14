@@ -26,7 +26,6 @@ express()
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/getAccounts', (req, res) => {
-    
     const pool = new Pool({
       user: user,
       host: host,
