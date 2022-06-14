@@ -8,7 +8,7 @@ This is a bare bones POC Node.js app using [Express 4](http://expressjs.com/) th
 4. Uses a .env file with the below settings
 5. Relies on the AWS SDK and needs global settings set.
 
-# What you need from Salesforce 
+# What you need from Salesforce   
 
 1. consumerKey
 2. consumerSecret
