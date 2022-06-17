@@ -9,7 +9,7 @@ This is a bare bones POC Node.js app using [Express 4](http://expressjs.com/) th
 3. Currently written as all "get" requests, needs to get restricted in the future
 4. Uses a .env file with the below settings
 5. Relies on the AWS SDK and needs global settings set.
-6. Code needs a good refactoring
+6. Code needs a good refactoring...
 
 # What you need from Salesforce 
 
@@ -38,8 +38,6 @@ This is a bare bones POC Node.js app using [Express 4](http://expressjs.com/) th
 
 This applications base is [Getting Started on Heroku with Node.js](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
 
-## Running Locally
-
 ## Make sure you have:
 1. [Node.js](http://nodejs.org/)
 2. [Heroku CLI](https://cli.heroku.com/) installed
@@ -55,14 +53,31 @@ This applications base is [Getting Started on Heroku with Node.js](https://devce
 
 Your app should now be running on the port that you have it set to, my default was 3000 [localhost:3000](http://localhost:3000/).
 
-## Deploying to Heroku
+## Running Locally
+1. heroku local
+2. http://localhost:3002/getBucketList - should return json data and not an error
+3. http://localhost:3002/getAccounts - should return json list of accounts
 
-1. $ heroku create
-2. $ git push heroku main
-3. $ heroku open
+## Deploying to Heroku and running on server
+1. $git push heroku main 
+2. $heroku open
+3. in browser append https://YOURSERVER.herokuapp.com/getBucketList - should return 
+4. actual command ti run 
+
+## Create heroku app command
+1. heroku create 
+
 
 ## Or go directly and get info
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+## Shortcuts
+
+1. git add .
+2. git commit -a -m "changes"
+3. git push -f origin main
+
+
 
 ## Documentation
 
